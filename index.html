@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Custom 3D Shape</title>
     <style>
-        body { margin: 0; }
+        body { margin: 0; overflow: hidden; }
     </style>
     <!-- Include Three.js library -->
     <script src="https://threejs.org/build/three.js"></script>
@@ -44,8 +44,8 @@
             const shape = new THREE.Mesh(geometry, material);
             scene.add(shape);
 
-            // Center the shape in the scene
-            shape.position.set(0, 0, 0);
+            // Position the shape at the bottom of the screen
+            shape.position.set(0, -window.innerHeight / 2 + 50, 0);
 
             // Adjust the position of the camera for a better view
             camera.position.z = 5;
@@ -70,7 +70,8 @@
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.render(scene, camera);
+            // Update shape position on window resize
+            createCustomShape();
         });
 
         createCustomShape();
