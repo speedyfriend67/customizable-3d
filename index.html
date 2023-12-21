@@ -1,49 +1,56 @@
-// Include Three.js library (make sure to include it in your HTML file)
-// Example: <script src="https://threejs.org/build/three.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom 3D Shape</title>
+    <!-- Include Three.js library -->
+    <script src="https://threejs.org/build/three.js"></script>
+</head>
+<body>
+    <script>
+        // JavaScript code for creating custom 3D shape
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
-// Create scene, camera, and renderer
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+        function createCustomShape() {
+            const userInput = prompt('Enter the name of the 3D shape (box, sphere, cone, etc.):').toLowerCase();
 
-// Function to create custom 3D shape based on user input
-function createCustomShape() {
-    const userInput = prompt('Enter the name of the 3D shape (box, sphere, cone, etc.):').toLowerCase();
+            let geometry;
 
-    let geometry;
+            switch (userInput) {
+                case 'box':
+                    geometry = new THREE.BoxGeometry();
+                    break;
+                case 'sphere':
+                    geometry = new THREE.SphereGeometry();
+                    break;
+                case 'cone':
+                    geometry = new THREE.ConeGeometry();
+                    break;
+                // Add more cases for other shapes as needed
 
-    switch (userInput) {
-        case 'box':
-            geometry = new THREE.BoxGeometry();
-            break;
-        case 'sphere':
-            geometry = new THREE.SphereGeometry();
-            break;
-        case 'cone':
-            geometry = new THREE.ConeGeometry();
-            break;
-        // Add more cases for other shapes as needed
+                default:
+                    alert('Invalid shape name. Using default box.');
+                    geometry = new THREE.BoxGeometry();
+            }
 
-        default:
-            alert('Invalid shape name. Using default box.');
-            geometry = new THREE.BoxGeometry();
-    }
+            const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+            const shape = new THREE.Mesh(geometry, material);
+            scene.add(shape);
 
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const shape = new THREE.Mesh(geometry, material);
-    scene.add(shape);
+            // Adjust the position of the shape (optional)
+            shape.position.x = 2;
 
-    // Adjust the position of the shape (optional)
-    shape.position.x = 2;
+            // Render the scene
+            renderer.render(scene, camera);
+        }
 
-    // Render the scene
-    renderer.render(scene, camera);
-}
-
-// Set up camera position
-camera.position.z = 5;
-
-// Call the function to create the custom 3D shape
-createCustomShape();
+        camera.position.z = 5;
+        createCustomShape();
+    </script>
+</body>
+</html>
