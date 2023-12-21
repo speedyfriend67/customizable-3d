@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Custom 3D Shape</title>
+    <style>
+        body { margin: 0; }
+    </style>
     <!-- Include Three.js library -->
     <script src="https://threejs.org/build/three.js"></script>
 </head>
 <body>
     <script>
-        // JavaScript code for creating custom 3D shape
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer();
@@ -42,14 +44,35 @@
             const shape = new THREE.Mesh(geometry, material);
             scene.add(shape);
 
-            // Adjust the position of the shape (optional)
-            shape.position.x = 2;
+            // Center the shape in the scene
+            shape.position.set(0, 0, 0);
 
-            // Render the scene
-            renderer.render(scene, camera);
+            // Adjust the position of the camera for a better view
+            camera.position.z = 5;
+
+            // Animation: Make the shape spin
+            const animate = function () {
+                requestAnimationFrame(animate);
+
+                // Rotate the shape
+                shape.rotation.x += 0.01;
+                shape.rotation.y += 0.01;
+
+                // Render the scene
+                renderer.render(scene, camera);
+            };
+
+            animate();
         }
 
-        camera.position.z = 5;
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.render(scene, camera);
+        });
+
         createCustomShape();
     </script>
 </body>
