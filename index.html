@@ -40,8 +40,10 @@
                     geometry = new THREE.BoxGeometry();
             }
 
+            // Prompt user for filling the shape or outline
             const fillShape = confirm('Do you want to fill the shape? Click OK for fill, Cancel for outline.');
 
+            // Set default material
             const material = fillShape
                 ? new THREE.MeshBasicMaterial({ color: 0x00ff00 })
                 : new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
@@ -56,14 +58,17 @@
             camera.position.z = 5;
 
             // Prompt user for spin speed
-            const spinSpeed = parseFloat(prompt('Enter spin speed (e.g., 0.01):')) || 0.01;
+            const spinSpeedInput = prompt('Enter spin speed (e.g., 0.01):');
+            const spinSpeed = spinSpeedInput !== '' ? parseFloat(spinSpeedInput) : 0.01;
 
             // Prompt user for size
-            const size = parseFloat(prompt('Enter size (e.g., 1):')) || 1;
+            const sizeInput = prompt('Enter size (e.g., 1):');
+            const size = sizeInput !== '' ? parseFloat(sizeInput) : 1;
             shape.scale.set(size, size, size);
 
             // Prompt user for color
-            const colorHex = prompt('Enter color (e.g., #ff0000):') || '#00ff00';
+            const colorHexInput = prompt('Enter color (e.g., #ff0000):');
+            const colorHex = colorHexInput !== '' ? colorHexInput : '#00ff00';
             shape.material.color.setHex(parseInt(colorHex.replace(/^#/, ''), 16));
 
             // Animation: Make the shape spin
