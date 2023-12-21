@@ -44,19 +44,30 @@
             const shape = new THREE.Mesh(geometry, material);
             scene.add(shape);
 
-            // Position the shape at the bottom of the screen
+            // Set the initial position of the shape at the bottom of the screen
             shape.position.set(0, -window.innerHeight / 2 + 50, 0);
 
             // Adjust the position of the camera for a better view
             camera.position.z = 5;
 
+            // Prompt user for spin speed
+            const spinSpeed = parseFloat(prompt('Enter spin speed (e.g., 0.01):')) || 0.01;
+
+            // Prompt user for size
+            const size = parseFloat(prompt('Enter size (e.g., 1):')) || 1;
+            shape.scale.set(size, size, size);
+
+            // Prompt user for color
+            const colorHex = prompt('Enter color (e.g., #ff0000):') || '#00ff00';
+            shape.material.color.setHex(parseInt(colorHex.replace(/^#/, ''), 16));
+
             // Animation: Make the shape spin
             const animate = function () {
                 requestAnimationFrame(animate);
 
-                // Rotate the shape
-                shape.rotation.x += 0.01;
-                shape.rotation.y += 0.01;
+                // Rotate the shape based on user-defined spin speed
+                shape.rotation.x += spinSpeed;
+                shape.rotation.y += spinSpeed;
 
                 // Render the scene
                 renderer.render(scene, camera);
